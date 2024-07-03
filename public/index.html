@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betting Odds</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <!-- Add sport icons and names here -->
+    </div>
+    <div class="container">
+        <div class="odds-display">
+            <div class="containerA">
+                <div class="head">5 ივლ 20:00 - ესპანეთი vs გერმანია</div>
+                <button type="button" data-game="ესპანეთი vs გერმანია" data-min-odds="3.05"
+                    data-max-odds="3.08">3.05-3.08</button>
+            </div>
+            <div class="containerB">
+                <div class="head">5 ივლ 23:00 - პორტუგალია vs საფრანგეთი</div>
+                <button type="button" data-game="პორტუგალია vs საფრანგეთი" data-min-odds="2.15"
+                    data-max-odds="2.18">2.15-2.18</button>
+            </div>
+            <div class="containerC">
+                <div class="head">6 ივლ 23:00 - ჰოლანდია vs თურქეთი</div>
+                <button type="button" data-game="ჰოლანდია vs თურქეთი" data-min-odds="1.38"
+                    data-max-odds="1.40">1.38-1.40</button>
+            </div>
+            <div class="containerD">
+                <div class="head">6 ივლ 20:00 - ინგლისი vs შვეიცარია</div>
+                <button type="button" data-game="ინგლისი vs შვეიცარია" data-min-odds="1.26"
+                    data-max-odds="1.29">1.26-1.29</button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <h2>ბილეთები</h2>
+            <div id="selected-bets"></div>
+        </div>
+    </div>
+
+    <script defer src="script.js"></script>
+</body>
+
+</html>

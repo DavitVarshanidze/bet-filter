@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.navbar {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  margin: 20px;
+}
+
+.odds-display {
+  flex: 3;
+  margin-right: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  background-color: #ffc107;
+  padding: 10px;
+}
+
+.odds-display .containerA,
+.containerB,
+.containerC,
+.containerD,
+.containerE,
+.containerF {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.containerA .head,
+.containerB .head,
+.containerC .head,
+.containerD .head,
+.containerE .head,
+.containerF .head {
+  display: flex;
+  justify-content: space-between;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar .bet {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.sidebar h2 {
+  text-align: center;
+}
