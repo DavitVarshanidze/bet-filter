@@ -5,7 +5,6 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// Dummy API URLs
 const totalizatorAPIs = [
   'https://api.totalizator1.com/odds',
   'https://api.totalizator2.com/odds',
@@ -33,14 +32,14 @@ app.get('/api/getOdds', async (req, res) => {
           odds2: odds[2],
           bestOdds
         }
-        // Add more games as needed
+        // თამაშის დამატების შემთხვევაში ვამატებ აქ
       ]
     });
   } catch (error) {
-    res.status(500).send('Error fetching odds');
+    res.status(500).send('error');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`port ${PORT}`);
 });

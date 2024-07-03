@@ -6,39 +6,50 @@ async function fetchTotalizatorOdds(game) {
     `http://localhost:3000/totalizator3?game=${encodedGame}`
   ];
 
+  const totalizatorNames = [
+    'Crystalbet',
+    'Europebet',
+    'Crocobet'
+  ];
+
   try {
     const responses = await Promise.all(totalizatorAPIs.map(url => {
       console.log('Fetching from URL:', url);
       return fetch(url);
     }));
 
-    const oddsData = await Promise.all(responses.map(response => {
+    const oddsData = await Promise.all(responses.map(async response => {
       console.log('Response from API:', response);
-      return response.json();
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Fetched data:', data);
+        return data;
+      } else {
+        console.error('Error in response:', response.statusText);
+        return [];
+      }
     }));
 
     console.log('Fetched odds data:', oddsData);
 
     return oddsData.map((data, index) => {
-      console.log(`Data from Totalizator ${index + 1}:`, data);
+      console.log(`Data from ${totalizatorNames[index]}:`, data);
       return {
-        totalizator: `Totalizator ${index + 1}`,
+        totalizator: totalizatorNames[index],
         odds: data.length > 0 && data[0].odds ? data[0].odds : 'N/A'
       };
     });
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error fetching totalizator odds:', error);
     return [];
   }
 }
 
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById('selected-bets');
-  
   const avgOdds = (minOdds + maxOdds) / 2;
   const stake = 10;
   const potentialWinnings = (avgOdds * stake).toFixed(2);
-
   const totalizatorOdds = await fetchTotalizatorOdds(game);
 
   console.log('Totalizator Odds:', totalizatorOdds);
@@ -47,7 +58,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.classList.add('bet');
   betDiv.innerHTML = `
     <div>
-      <strong>თამაში:</strong> ${game}
+      <strong></strong> ${game}<br></br>
     </div>
     <div>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
@@ -57,13 +68,18 @@ async function addToSidebar(game, minOdds, maxOdds) {
     </div>
     <div>
       <strong>შეთავაზებები:</strong>
-      <ul>
+      <ul class="kushi">
         ${totalizatorOdds.map(offer => `
           <li>${offer.totalizator}: ${offer.odds}</li>
         `).join('')}
       </ul>
     </div>
+    <button class="remove-bet">წაშლა</button>
   `;
+
+  betDiv.querySelector('.remove-bet').addEventListener('click', () => {
+    sidebar.removeChild(betDiv);
+  });
 
   sidebar.appendChild(betDiv);
 }

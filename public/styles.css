@@ -26,6 +26,7 @@ body {
   flex: 1;
   background-color: #ffc107;
   padding: 10px;
+  border-radius: 5px;
 }
 
 .odds-display .containerA,
@@ -62,4 +63,9 @@ body {
 
 .sidebar h2 {
   text-align: center;
+}
+
+.bet .kushi {
+  display: flex;
+  text-decoration: none;
 }
