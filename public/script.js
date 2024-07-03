@@ -8,7 +8,7 @@ async function fetchTotalizatorOdds(game) {
 
   const totalizatorNames = [
     'Crystalbet',
-    'Europebet',
+    'Betlive',
     'Crocobet'
   ];
 
@@ -74,12 +74,27 @@ async function addToSidebar(game, minOdds, maxOdds) {
         `).join('')}
       </ul>
     </div>
+    <button class="crystalbet">Crystalbet</button>
+    <button class="betlive">Betlive</button>
+    <button class="crocobet">Crocobet</button><br></br>
     <button class="remove-bet">წაშლა</button>
   `;
 
   betDiv.querySelector('.remove-bet').addEventListener('click', () => {
     sidebar.removeChild(betDiv);
   });
+
+   betDiv.querySelector('.crystalbet').addEventListener('click', () => {
+    window.location.href = 'https://www.crystalbet.com/';
+  });
+  
+  betDiv.querySelector('.betlive').addEventListener('click', () => {
+   window.location.href = 'https://www.betlive.com/en/home';
+ });
+ 
+ betDiv.querySelector('.crocobet').addEventListener('click', () => {
+  window.location.href = 'https://crocobet.com/';
+});
 
   sidebar.appendChild(betDiv);
 }

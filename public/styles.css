@@ -66,6 +66,6 @@ body {
 }
 
 .bet .kushi {
+  list-style-type: none;
   display: flex;
-  text-decoration: none;
 }
