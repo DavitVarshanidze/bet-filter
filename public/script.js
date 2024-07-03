@@ -85,15 +85,15 @@ async function addToSidebar(game, minOdds, maxOdds) {
   });
 
    betDiv.querySelector('.crystalbet').addEventListener('click', () => {
-    window.location.href = 'https://www.crystalbet.com/';
+    window.open('https://www.crystalbet.com/', '_blank');
   });
   
   betDiv.querySelector('.betlive').addEventListener('click', () => {
-   window.location.href = 'https://www.betlive.com/en/home';
+   window.open('https://www.betlive.com/en/home', '_blank');
  });
  
  betDiv.querySelector('.crocobet').addEventListener('click', () => {
-  window.location.href = 'https://crocobet.com/';
+  window.open('https://crocobet.com/', '_blank');
 });
 
   sidebar.appendChild(betDiv);
