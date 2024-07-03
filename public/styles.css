@@ -1,30 +1,71 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
+  margin: 2em;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: rgb(36, 36, 36);
 }
 
 .navbar {
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  text-align: center;
-}
-
-.navbar ul {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: rgb(61, 61, 61);
+  padding: 10px;
+  gap: 10px;
+  border-radius: 10px;
 }
 
-.navbar li {
-  list-style-type: none;
-}
-
-.navbar a {
-  text-decoration: none;
+body .navbar .category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   color: #fff;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  padding-bottom: 10px;
 }
+
+.category span {
+  font-size: 14px;
+}
+
+.category::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: rgb(253, 224, 83);
+  transition: width 0.3s ease, left 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.category:hover::after {
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .category {
+    flex: 1 1 15%;
+  }
+}
+
+@media (max-width: 800px) {
+  .category {
+    flex: 1 1 25%;
+  }
+}
+
+@media (max-width: 500px) {
+  .category {
+    flex: 1 1 45%;
+  }
+}
+
+/* END */
 
 .container {
   display: flex;
@@ -38,9 +79,9 @@ body {
 
 .sidebar {
   flex: 1;
-  background-color: #ffc107;
+  background-color: rgb(253, 224, 83);
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .odds-display .containerA,
@@ -52,7 +93,7 @@ body {
   background-color: white;
   margin-bottom: 20px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .containerA .head,
@@ -65,14 +106,14 @@ body {
   justify-content: space-between;
   background-color: #f4f4f4;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .sidebar .bet {
   background-color: white;
   margin-bottom: 20px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .sidebar h2 {
@@ -82,4 +123,20 @@ body {
 .bet .kushi {
   list-style-type: none;
   display: flex;
+}
+
+button { 
+  background-color: #4848481e;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgba(128, 128, 128, 0.339);
+}
+
+button:active {
+  background-color: rgba(128, 128, 128, 0.57);
 }
