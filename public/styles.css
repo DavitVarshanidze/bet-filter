@@ -12,6 +12,20 @@ body {
   text-align: center;
 }
 
+.navbar ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar li {
+  list-style-type: none;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #fff;
+}
+
 .container {
   display: flex;
   margin: 20px;
