@@ -116,7 +116,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("Please enter a valid stake amount.");
+    alert("გთხოვთ შეიყვანოთ ფსონი");
     return;
   }
 
