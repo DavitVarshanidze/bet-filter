@@ -150,7 +150,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
     <button class="crystalbet">Crystalbet</button>
     <button class="betlive">Betlive</button>
     <button class="crocobet">Crocobet</button><br></br>
-    <button class="remove-bet">Remove Bet</button>
+    <button class="remove-bet">წაშლა</button>
   `;
 
   betDiv.querySelector(".remove-bet").addEventListener("click", () => {
