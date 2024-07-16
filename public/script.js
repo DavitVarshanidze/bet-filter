@@ -45,43 +45,112 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
+// async function addToSidebar(game, minOdds, maxOdds) {
+//   const sidebar = document.getElementById("selected-bets");
+//   const avgOdds = (minOdds + maxOdds) / 2;
+//   const potentialWinnings = (avgOdds * stake).toFixed(2);
+//   const totalizatorOdds = await fetchTotalizatorOdds(game);
+//   const stakeInput = document.getElementById("stake");
+//   const stakeValue = parseFloat(stakeInput.value);
+
+//   if (isNaN(stake) || stake <= 0) {
+//     alert("Please enter a valid stake amount.");
+//     return;
+//   }
+//   const stake = stakeValue;
+
+//   console.log("Totalizator Odds:", totalizatorOdds);
+
+//   const betDiv = document.createElement("div");
+//   betDiv.classList.add("bet");
+//   betDiv.innerHTML = `
+//     <div>
+//       <strong></strong> ${game}<br></br>
+//     </div>
+//     <div>
+//       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
+//     </div>
+//     <div>
+//       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}
+//     </div>
+//     <div>
+//       <strong>შეთავაზებები:</strong>
+//       <ul class="kushi">
+//         ${totalizatorOdds
+//           .map(
+//             (offer) => `
+//           <li>${offer.totalizator}: ${offer.odds}</li>
+//         `
+//           )
+//           .join("")}
+//       </ul>
+//     </div>
+//     <button class="crystalbet">Crystalbet</button>
+//     <button class="betlive">Betlive</button>
+//     <button class="crocobet">Crocobet</button><br></br>
+//     <button class="remove-bet">წაშლა</button>
+//   `;
+
+//   betDiv.querySelector(".remove-bet").addEventListener("click", () => {
+//     sidebar.removeChild(betDiv);
+//   });
+
+//   betDiv.querySelector(".crystalbet").addEventListener("click", () => {
+//     window.open("https://www.crystalbet.com/", "_blank");
+//   });
+
+//   betDiv.querySelector(".betlive").addEventListener("click", () => {
+//     window.open("https://www.betlive.com/en/home", "_blank");
+//   });
+
+//   betDiv.querySelector(".crocobet").addEventListener("click", () => {
+//     window.open("https://crocobet.com/", "_blank");
+//   });
+
+//   sidebar.appendChild(betDiv);
+// }
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const avgOdds = (minOdds + maxOdds) / 2;
-  const stake = 10;
+  const stakeInput = document.getElementById("stake");
+  const stakeValue = parseFloat(stakeInput.value);
+
+  if (isNaN(stakeValue) || stakeValue <= 0) {
+    alert("Please enter a valid stake amount.");
+    return;
+  }
+
+  const stake = stakeValue;
   const potentialWinnings = (avgOdds * stake).toFixed(2);
   const totalizatorOdds = await fetchTotalizatorOdds(game);
-
-  console.log("Totalizator Odds:", totalizatorOdds);
 
   const betDiv = document.createElement("div");
   betDiv.classList.add("bet");
   betDiv.innerHTML = `
     <div>
-      <strong></strong> ${game}<br></br>
+      <strong>${game}</strong><br>
     </div>
     <div>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
+    </div>
+    <div>
+      <strong>ფსონი:</strong> ${stake}
     </div>
     <div>
       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}
     </div>
     <div>
       <strong>შეთავაზებები:</strong>
-      <ul class="kushi">
-        ${totalizatorOdds
-          .map(
-            (offer) => `
+      <ul class="offers">
+        ${totalizatorOdds.map(offer => `
           <li>${offer.totalizator}: ${offer.odds}</li>
-        `
-          )
-          .join("")}
+        `).join("")}
       </ul>
     </div>
     <button class="crystalbet">Crystalbet</button>
     <button class="betlive">Betlive</button>
     <button class="crocobet">Crocobet</button><br></br>
-    <button class="remove-bet">წაშლა</button>
+    <button class="remove-bet">Remove Bet</button>
   `;
 
   betDiv.querySelector(".remove-bet").addEventListener("click", () => {
@@ -100,8 +169,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
     window.open("https://crocobet.com/", "_blank");
   });
 
+  betDiv.querySelector(".remove-bet").addEventListener("click", () => {
+    sidebar.removeChild(betDiv);
+  });
+
   sidebar.appendChild(betDiv);
 }
+
 
 document.querySelectorAll(".odds-display button").forEach((button) => {
   button.addEventListener("click", (event) => {

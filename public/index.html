@@ -1,171 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="./assets/bet.png" type="image/png" />
-    <title>Bet Filter</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
 
-  <body>
-    <div class="navbar">
-      <div class="category">
-        <span>TOP თამაშები</span>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="./assets/bet.png" type="image/png" />
+  <title>Bet Filter</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="navbar">
+    <div class="category">
+      <span>TOP თამაშები</span>
+    </div>
+    <div class="category">
+      <span>LIVESTREAM</span>
+    </div>
+    <div class="category">
+      <span>ფავორიტები</span>
+    </div>
+    <div class="category">
+      <span>ფეხბურთი</span>
+    </div>
+    <div class="category">
+      <span>EURO 2024</span>
+    </div>
+    <div class="category">
+      <span>კოპა ამერიკა</span>
+    </div>
+    <div class="category">
+      <span>ოლიმპიადა</span>
+    </div>
+    <div class="category">
+      <span>ჩოგბურთი</span>
+    </div>
+    <div class="category">
+      <span>კალათბურთი</span>
+    </div>
+    <div class="category">
+      <span>ჰოკეი</span>
+    </div>
+    <div class="category">
+      <span>რაგბი</span>
+    </div>
+    <div class="category">
+      <span>ფრენბურთი</span>
+    </div>
+    <div class="category">
+      <span>ხელბურთი</span>
+    </div>
+    <div class="category">
+      <span>მაგიდის ჩოგ.</span>
+    </div>
+    <div class="category">
+      <span>წყალბურთი</span>
+    </div>
+    <div class="category">
+      <span>ბეისბოლი</span>
+    </div>
+    <div class="category">
+      <span>ფუტსალი</span>
+    </div>
+    <div class="category">
+      <span>ბადმინტონი</span>
+    </div>
+    <div class="category">
+      <span>პლაჟის ფრენ.</span>
+    </div>
+    <div class="category">
+      <span>ბალახის ჰოკეი</span>
+    </div>
+    <div class="category">
+      <span>ამ. ფეხბურთი</span>
+    </div>
+    <div class="category">
+      <span>ავსტ. ფეხბურთი</span>
+    </div>
+    <div class="category">
+      <span>ბილიარდი</span>
+    </div>
+    <div class="category">
+      <span>ფორმულა 1</span>
+    </div>
+    <div class="category">
+      <span>მოროტბოლა</span>
+    </div>
+    <div class="category">
+      <span>კრივი</span>
+    </div>
+    <div class="category">
+      <span>MMA</span>
+    </div>
+    <div class="category">
+      <span>დარტსი</span>
+    </div>
+    <div class="category">
+      <span>კრიკეტი</span>
+    </div>
+    <div class="category">
+      <span>სკვოში</span>
+    </div>
+    <div class="category">
+      <span>პესაპალო</span>
+    </div>
+    <div class="category">
+      <span>გელ. ფეხბურთი</span>
+    </div>
+    <div class="category">
+      <span>გელ. ჰარლინგი</span>
+    </div>
+    <div class="category">
+      <span>ლაკროსი</span>
+    </div>
+  </div>
+  <div class="container">
+    <div class="odds-display">
+      <div class="containerA">
+        <div class="head">5 ივლ 20:00 - ესპანეთი vs გერმანია</div>
+        <button type="button" data-game="ესპანეთი vs გერმანია" data-min-odds="3.05" data-max-odds="3.08">
+          3.05-3.08
+        </button>
       </div>
-      <div class="category">
-        <span>LIVESTREAM</span>
+      <div class="containerB">
+        <div class="head">5 ივლ 23:00 - პორტუგალია vs საფრანგეთი</div>
+        <button type="button" data-game="პორტუგალია vs საფრანგეთი" data-min-odds="2.15" data-max-odds="2.18">
+          2.15-2.18
+        </button>
       </div>
-      <div class="category">
-        <span>ფავორიტები</span>
+      <div class="containerC">
+        <div class="head">6 ივლ 23:00 - ჰოლანდია vs თურქეთი</div>
+        <button type="button" data-game="ჰოლანდია vs თურქეთი" data-min-odds="1.38" data-max-odds="1.40">
+          1.38-1.40
+        </button>
       </div>
-      <div class="category">
-        <span>ფეხბურთი</span>
-      </div>
-      <div class="category">
-        <span>EURO 2024</span>
-      </div>
-      <div class="category">
-        <span>კოპა ამერიკა</span>
-      </div>
-      <div class="category">
-        <span>ოლიმპიადა</span>
-      </div>
-      <div class="category">
-        <span>ჩოგბურთი</span>
-      </div>
-      <div class="category">
-        <span>კალათბურთი</span>
-      </div>
-      <div class="category">
-        <span>ჰოკეი</span>
-      </div>
-      <div class="category">
-        <span>რაგბი</span>
-      </div>
-      <div class="category">
-        <span>ფრენბურთი</span>
-      </div>
-      <div class="category">
-        <span>ხელბურთი</span>
-      </div>
-      <div class="category">
-        <span>მაგიდის ჩოგ.</span>
-      </div>
-      <div class="category">
-        <span>წყალბურთი</span>
-      </div>
-      <div class="category">
-        <span>ბეისბოლი</span>
-      </div>
-      <div class="category">
-        <span>ფუტსალი</span>
-      </div>
-      <div class="category">
-        <span>ბადმინტონი</span>
-      </div>
-      <div class="category">
-        <span>პლაჟის ფრენ.</span>
-      </div>
-      <div class="category">
-        <span>ბალახის ჰოკეი</span>
-      </div>
-      <div class="category">
-        <span>ამ. ფეხბურთი</span>
-      </div>
-      <div class="category">
-        <span>ავსტ. ფეხბურთი</span>
-      </div>
-      <div class="category">
-        <span>ბილიარდი</span>
-      </div>
-      <div class="category">
-        <span>ფორმულა 1</span>
-      </div>
-      <div class="category">
-        <span>მოროტბოლა</span>
-      </div>
-      <div class="category">
-        <span>კრივი</span>
-      </div>
-      <div class="category">
-        <span>MMA</span>
-      </div>
-      <div class="category">
-        <span>დარტსი</span>
-      </div>
-      <div class="category">
-        <span>კრიკეტი</span>
-      </div>
-      <div class="category">
-        <span>სკვოში</span>
-      </div>
-      <div class="category">
-        <span>პესაპალო</span>
-      </div>
-      <div class="category">
-        <span>გელ. ფეხბურთი</span>
-      </div>
-      <div class="category">
-        <span>გელ. ჰარლინგი</span>
-      </div>
-      <div class="category">
-        <span>ლაკროსი</span>
+      <div class="containerD">
+        <div class="head">6 ივლ 20:00 - ინგლისი vs შვეიცარია</div>
+        <button type="button" data-game="ინგლისი vs შვეიცარია" data-min-odds="1.26" data-max-odds="1.29">
+          1.26-1.29
+        </button>
       </div>
     </div>
-    <div class="container">
-      <div class="odds-display">
-        <div class="containerA">
-          <div class="head">5 ივლ 20:00 - ესპანეთი vs გერმანია</div>
-          <button
-            type="button"
-            data-game="ესპანეთი vs გერმანია"
-            data-min-odds="3.05"
-            data-max-odds="3.08"
-          >
-            3.05-3.08
-          </button>
-        </div>
-        <div class="containerB">
-          <div class="head">5 ივლ 23:00 - პორტუგალია vs საფრანგეთი</div>
-          <button
-            type="button"
-            data-game="პორტუგალია vs საფრანგეთი"
-            data-min-odds="2.15"
-            data-max-odds="2.18"
-          >
-            2.15-2.18
-          </button>
-        </div>
-        <div class="containerC">
-          <div class="head">6 ივლ 23:00 - ჰოლანდია vs თურქეთი</div>
-          <button
-            type="button"
-            data-game="ჰოლანდია vs თურქეთი"
-            data-min-odds="1.38"
-            data-max-odds="1.40"
-          >
-            1.38-1.40
-          </button>
-        </div>
-        <div class="containerD">
-          <div class="head">6 ივლ 20:00 - ინგლისი vs შვეიცარია</div>
-          <button
-            type="button"
-            data-game="ინგლისი vs შვეიცარია"
-            data-min-odds="1.26"
-            data-max-odds="1.29"
-          >
-            1.26-1.29
-          </button>
-        </div>
-      </div>
-      <div class="sidebar">
-        <h2>ბილეთები</h2>
-        <div id="selected-bets"></div>
-      </div>
+    <div class="sidebar">
+      <h2>ბილეთები</h2>
+      <div id="selected-bets"></div>
+
+      <!-- stake input -->
+      <label for="stake">ფსონი</label>
+      <input type="number" id="stake" name="stake" min="0" step="any" required>
     </div>
 
-    <script defer src="script.js"></script>
-  </body>
+  </div>
+
+  <script defer src="script.js"></script>
+</body>
+
 </html>

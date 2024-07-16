@@ -30,7 +30,7 @@ app.get('/api/getOdds', async (req, res) => {
           odds2: odds[2],
           bestOdds
         }
-        // თამაშის დამატების შემთხვევაში ვამატებ აქ
+        // add games here
       ]
     });
   } catch (error) {
