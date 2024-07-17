@@ -94,6 +94,7 @@ body .navbar .category {
   margin-bottom: 20px;
   padding: 10px;
   border-radius: 10px;
+  font-size: 1em;
 }
 
 .containerA .head,
@@ -131,6 +132,7 @@ button {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
+  font-size: 0.9em;
 }
 
 button:hover {
