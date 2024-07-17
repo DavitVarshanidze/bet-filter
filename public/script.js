@@ -1,118 +1,85 @@
+let selectedBets = [];
+
 async function fetchTotalizatorOdds(game) {
-  const encodedGame = encodeURIComponent(game);
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1?game=${encodedGame}`,
-    `http://localhost:3000/totalizator2?game=${encodedGame}`,
-    `http://localhost:3000/totalizator3?game=${encodedGame}`,
+    `http://localhost:3000/totalizator1`,
+    `http://localhost:3000/totalizator2`,
+    `http://localhost:3000/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
+  const totalizatorUrls = [
+    "https://www.crystalbet.com/",
+    "https://www.betlive.com/en/home",
+    "https://crocobet.com/",
+  ];
 
   try {
-    const responses = await Promise.all(
-      totalizatorAPIs.map((url) => {
-        console.log("Fetching from URL:", url);
-        return fetch(url);
-      })
-    );
+    const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
 
     const oddsData = await Promise.all(
-      responses.map(async (response) => {
-        console.log("Response from API:", response);
+      responses.map(async (response, index) => {
         if (response.ok) {
           const data = await response.json();
-          console.log("Fetched data:", data);
-          return data;
+          const gameData = data.find(item => item.game === game);
+          return {
+            totalizator: totalizatorNames[index],
+            odds: gameData?.odds ?? "N/A",
+            url: totalizatorUrls[index]
+          };
         } else {
-          console.error("Error in response:", response.statusText);
-          return [];
+          console.error(`Error from ${totalizatorNames[index]}: ${response.statusText}`);
+          return { totalizator: totalizatorNames[index], odds: "N/A", url: totalizatorUrls[index] };
         }
       })
     );
 
-    console.log("Fetched odds data:", oddsData);
-
-    return oddsData.map((data, index) => {
-      console.log(`Data from ${totalizatorNames[index]}:`, data);
-      return {
-        totalizator: totalizatorNames[index],
-        odds: data.length > 0 && data[0].odds ? data[0].odds : "N/A",
-      };
-    });
+    return oddsData;
   } catch (error) {
     console.error("Error fetching totalizator odds:", error);
-    return [];
+    return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
   }
 }
 
-// async function addToSidebar(game, minOdds, maxOdds) {
-//   const sidebar = document.getElementById("selected-bets");
-//   const avgOdds = (minOdds + maxOdds) / 2;
-//   const potentialWinnings = (avgOdds * stake).toFixed(2);
-//   const totalizatorOdds = await fetchTotalizatorOdds(game);
-//   const stakeInput = document.getElementById("stake");
-//   const stakeValue = parseFloat(stakeInput.value);
+// total potential winnings
+function updateTotalPotentialWinnings() {
+  const stakeValue = parseFloat(document.getElementById("stake").value);
+  if (isNaN(stakeValue) || stakeValue <= 0) {
+    document.getElementById("total-potential-winnings").style.display = "none";
+    return;
+  }
 
-//   if (isNaN(stake) || stake <= 0) {
-//     alert("Please enter a valid stake amount.");
-//     return;
-//   }
-//   const stake = stakeValue;
+  const totalPotentialWinningsList = document.getElementById("total-potential-winnings-list");
+  totalPotentialWinningsList.innerHTML = ""; // clear existing list
 
-//   console.log("Totalizator Odds:", totalizatorOdds);
+  const totalizatorWinnings = {};
 
-//   const betDiv = document.createElement("div");
-//   betDiv.classList.add("bet");
-//   betDiv.innerHTML = `
-//     <div>
-//       <strong></strong> ${game}<br></br>
-//     </div>
-//     <div>
-//       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
-//     </div>
-//     <div>
-//       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}
-//     </div>
-//     <div>
-//       <strong>შეთავაზებები:</strong>
-//       <ul class="kushi">
-//         ${totalizatorOdds
-//           .map(
-//             (offer) => `
-//           <li>${offer.totalizator}: ${offer.odds}</li>
-//         `
-//           )
-//           .join("")}
-//       </ul>
-//     </div>
-//     <button class="crystalbet">Crystalbet</button>
-//     <button class="betlive">Betlive</button>
-//     <button class="crocobet">Crocobet</button><br></br>
-//     <button class="remove-bet">წაშლა</button>
-//   `;
+  selectedBets.forEach(bet => {
+    bet.totalizatorOdds.forEach(offer => {
+      if (!totalizatorWinnings[offer.totalizator]) {
+        totalizatorWinnings[offer.totalizator] = { totalizator: offer.totalizator, winnings: stakeValue };
+      }
+      totalizatorWinnings[offer.totalizator].winnings *= parseFloat(offer.odds);
+    });
+  });
 
-//   betDiv.querySelector(".remove-bet").addEventListener("click", () => {
-//     sidebar.removeChild(betDiv);
-//   });
+  const sortedWinnings = Object.values(totalizatorWinnings).sort((a, b) => b.winnings - a.winnings);
 
-//   betDiv.querySelector(".crystalbet").addEventListener("click", () => {
-//     window.open("https://www.crystalbet.com/", "_blank");
-//   });
+  sortedWinnings.forEach((offer, index) => {
+    const div = document.createElement("div");
+    div.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
+    if (index === 0) {
+      div.style.border = "3px solid green";
+      div.style.width = "130px";
+    }
+    totalPotentialWinningsList.appendChild(div);
+  });
 
-//   betDiv.querySelector(".betlive").addEventListener("click", () => {
-//     window.open("https://www.betlive.com/en/home", "_blank");
-//   });
-
-//   betDiv.querySelector(".crocobet").addEventListener("click", () => {
-//     window.open("https://crocobet.com/", "_blank");
-//   });
-
-//   sidebar.appendChild(betDiv);
-// }
+  document.getElementById("total-potential-winnings").style.display = "block";
+}
 
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
-  const avgOdds = (minOdds + maxOdds) / 2;
   const stakeInput = document.getElementById("stake");
   const stakeValue = parseFloat(stakeInput.value);
 
@@ -121,8 +88,8 @@ async function addToSidebar(game, minOdds, maxOdds) {
     return;
   }
 
-  const stake = stakeValue;
-  const potentialWinnings = (avgOdds * stake).toFixed(2);
+  const avgOdds = (minOdds + maxOdds) / 2;
+  const potentialWinnings = (avgOdds * stakeValue).toFixed(2);
   const totalizatorOdds = await fetchTotalizatorOdds(game);
 
   const betDiv = document.createElement("div");
@@ -130,67 +97,58 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div>
       <strong>${game}</strong><br>
-    </div>
-    <div>
-      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
-    </div>
-    <div>
-      <strong>ფსონი:</strong> ${stake}
-    </div>
-    <div>
-      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
     </div>
     <div>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
-          <li>${offer.totalizator}: ${offer.odds}</li>
+          <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
     </div>
-    <button class="crystalbet">Crystalbet</button>
-    <button class="betlive">Betlive</button>
-    <button class="crocobet">Crocobet</button><br></br>
     <button class="remove-bet">წაშლა</button>
   `;
 
   betDiv.querySelector(".remove-bet").addEventListener("click", () => {
     sidebar.removeChild(betDiv);
+    selectedBets = selectedBets.filter(bet => bet.game !== game);
+    updateTotalPotentialWinnings();
   });
 
-  betDiv.querySelector(".crystalbet").addEventListener("click", () => {
-    window.open("https://www.crystalbet.com/", "_blank");
-  });
-
-  betDiv.querySelector(".betlive").addEventListener("click", () => {
-    window.open("https://www.betlive.com/en/home", "_blank");
-  });
-
-  betDiv.querySelector(".crocobet").addEventListener("click", () => {
-    window.open("https://crocobet.com/", "_blank");
-  });
-
-  betDiv.querySelector(".remove-bet").addEventListener("click", () => {
-    sidebar.removeChild(betDiv);
+  betDiv.querySelectorAll(".offer-button").forEach(button => {
+    button.addEventListener("click", () => {
+      window.open(button.dataset.url, "_blank");
+    });
   });
 
   sidebar.appendChild(betDiv);
-}
 
+  selectedBets.push({ game, avgOdds, totalizatorOdds });
+
+  updateTotalPotentialWinnings();
+}
 
 document.querySelectorAll(".odds-display button").forEach((button) => {
   button.addEventListener("click", (event) => {
     const game = event.target.dataset.game;
     const minOdds = parseFloat(event.target.dataset.minOdds);
     const maxOdds = parseFloat(event.target.dataset.maxOdds);
-    console.log(
-      "Button clicked for game:",
-      game,
-      "Min odds:",
-      minOdds,
-      "Max odds:",
-      maxOdds
-    );
     addToSidebar(game, minOdds, maxOdds);
   });
+});
+
+document.getElementById("stake").addEventListener("input", updateTotalPotentialWinnings);
+
+document.getElementById("increase-stake").addEventListener("click", () => {
+  const stakeInput = document.getElementById("stake");
+  stakeInput.value = (parseFloat(stakeInput.value) + 0.01).toFixed(2);
+  updateTotalPotentialWinnings();
+});
+
+document.getElementById("decrease-stake").addEventListener("click", () => {
+  const stakeInput = document.getElementById("stake");
+  const newValue = parseFloat(stakeInput.value) - 0.01;
+  stakeInput.value = newValue > 0 ? newValue.toFixed(2) : "0.01";
+  updateTotalPotentialWinnings();
 });

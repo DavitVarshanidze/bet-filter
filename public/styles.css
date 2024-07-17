@@ -142,3 +142,62 @@ button:hover {
 button:active {
   background-color: rgba(128, 128, 128, 0.57);
 }
+
+.bet-container {
+  width: 300px;
+  padding: 20px;
+  background: rgb(253, 224, 83);
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.bet {
+  padding: 10px 0;
+}
+
+.bet strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.offers {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.offers li {
+  margin-bottom: 5px;
+}
+
+button {
+  margin-top: 10px;
+  margin-right: 5px;
+}
+
+.stake-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stake-container button {
+  background-color: rgba(128, 128, 128, 0.339);  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.stake-container button:hover {
+  background-color: rgba(128, 128, 128, 0.57);}
+
+.stake-input {
+  width: 100px;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.total-potential-winnings {
+  background: rgb(253, 224, 83);
+  padding: 20px;
+  margin-bottom: 20px;
+}
