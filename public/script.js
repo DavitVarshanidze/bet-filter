@@ -109,6 +109,7 @@ async function fetchTotalizatorOdds(game) {
 
 //   sidebar.appendChild(betDiv);
 // }
+
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const avgOdds = (minOdds + maxOdds) / 2;
