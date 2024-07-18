@@ -1,6 +1,5 @@
 let selectedBets = [];
 
-// Fetch odds from totalizator APIs
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
@@ -42,7 +41,6 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
-// Update total potential winnings
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
   if (isNaN(stakeValue) || stakeValue <= 0) {
@@ -51,7 +49,7 @@ function updateTotalPotentialWinnings() {
   }
 
   const totalPotentialWinningsList = document.getElementById("total-potential-winnings-list");
-  totalPotentialWinningsList.innerHTML = ""; // Clear existing list
+  totalPotentialWinningsList.innerHTML = ""; 
 
   const totalizatorWinnings = {};
 
@@ -119,7 +117,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
     details.style.display = details.style.display === "none" ? "block" : "none";
   });
 
-  // Add event listeners for new buttons
   betDiv.querySelector(".remove-bet").addEventListener("click", (event) => {
     event.stopPropagation(); // Prevent triggering the toggle
     sidebar.removeChild(betDiv);
@@ -127,7 +124,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
     updateTotalPotentialWinnings();
   });
 
-  // Add event listeners for offer buttons
   betDiv.querySelectorAll(".offer-button").forEach(button => {
     button.addEventListener("click", (event) => {
       event.stopPropagation(); // Prevent triggering the toggle
@@ -141,7 +137,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
   updateTotalPotentialWinnings();
 }
 
-// Initialize game buttons
 document.querySelectorAll(".odds-display button").forEach(button => {
   button.addEventListener("click", async () => {
     const game = button.dataset.game;
@@ -151,7 +146,6 @@ document.querySelectorAll(".odds-display button").forEach(button => {
   });
 });
 
-// Initialize stake increment and decrement buttons
 document.getElementById("decrease-stake").addEventListener("click", () => {
   const stakeInput = document.getElementById("stake");
   const currentStake = parseFloat(stakeInput.value);
@@ -168,7 +162,6 @@ document.getElementById("increase-stake").addEventListener("click", () => {
   updateTotalPotentialWinnings();
 });
 
-// Initialize stake input change event
 document.getElementById("stake").addEventListener("change", () => {
   updateTotalPotentialWinnings();
 });
