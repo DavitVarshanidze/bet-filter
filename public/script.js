@@ -68,8 +68,8 @@ function updateTotalPotentialWinnings() {
     const div = document.createElement("div");
     div.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
     if (index === 0) {
-      div.style.backgroundColor = "green";
-      div.style.color = "white";
+      div.style.width = "130px";
+      div.style.border = "3px solid green";
     }
     totalPotentialWinningsList.appendChild(div);
   });
