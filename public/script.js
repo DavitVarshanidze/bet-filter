@@ -1,5 +1,6 @@
 let selectedBets = [];
 
+// Fetch odds from totalizator APIs
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
@@ -41,7 +42,7 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
-// total potential winnings
+// Update total potential winnings
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
   if (isNaN(stakeValue) || stakeValue <= 0) {
@@ -50,7 +51,7 @@ function updateTotalPotentialWinnings() {
   }
 
   const totalPotentialWinningsList = document.getElementById("total-potential-winnings-list");
-  totalPotentialWinningsList.innerHTML = ""; // clear existing list
+  totalPotentialWinningsList.innerHTML = ""; // Clear existing list
 
   const totalizatorWinnings = {};
 
@@ -69,8 +70,8 @@ function updateTotalPotentialWinnings() {
     const div = document.createElement("div");
     div.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
     if (index === 0) {
-      div.style.border = "3px solid green";
-      div.style.width = "130px";
+      div.style.backgroundColor = "green";
+      div.style.color = "white";
     }
     totalPotentialWinningsList.appendChild(div);
   });
@@ -78,6 +79,7 @@ function updateTotalPotentialWinnings() {
   document.getElementById("total-potential-winnings").style.display = "block";
 }
 
+// Add selected bet to the sidebar
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const stakeInput = document.getElementById("stake");
@@ -97,58 +99,76 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div>
       <strong>${game}</strong><br>
-      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
     </div>
-    <div>
+    <div class="bet-details">
+      <strong>ფსონი:</strong> ${stakeValue}<br>
+      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
+      <button class="remove-bet">წაშლა</button>
     </div>
-    <button class="remove-bet">წაშლა</button>
   `;
 
-  betDiv.querySelector(".remove-bet").addEventListener("click", () => {
+  betDiv.addEventListener("click", () => {
+    const details = betDiv.querySelector(".bet-details");
+    details.style.display = details.style.display === "none" ? "block" : "none";
+  });
+
+  // Add event listeners for new buttons
+  betDiv.querySelector(".remove-bet").addEventListener("click", (event) => {
+    event.stopPropagation(); // Prevent triggering the toggle
     sidebar.removeChild(betDiv);
     selectedBets = selectedBets.filter(bet => bet.game !== game);
     updateTotalPotentialWinnings();
   });
 
+  // Add event listeners for offer buttons
   betDiv.querySelectorAll(".offer-button").forEach(button => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation(); // Prevent triggering the toggle
       window.open(button.dataset.url, "_blank");
     });
   });
 
   sidebar.appendChild(betDiv);
 
-  selectedBets.push({ game, avgOdds, totalizatorOdds });
-
+  selectedBets.push({ game, totalizatorOdds });
   updateTotalPotentialWinnings();
 }
 
-document.querySelectorAll(".odds-display button").forEach((button) => {
-  button.addEventListener("click", (event) => {
-    const game = event.target.dataset.game;
-    const minOdds = parseFloat(event.target.dataset.minOdds);
-    const maxOdds = parseFloat(event.target.dataset.maxOdds);
-    addToSidebar(game, minOdds, maxOdds);
+// Initialize game buttons
+document.querySelectorAll(".odds-display button").forEach(button => {
+  button.addEventListener("click", async () => {
+    const game = button.dataset.game;
+    const minOdds = parseFloat(button.dataset.minOdds);
+    const maxOdds = parseFloat(button.dataset.maxOdds);
+    await addToSidebar(game, minOdds, maxOdds);
   });
 });
 
-document.getElementById("stake").addEventListener("input", updateTotalPotentialWinnings);
+// Initialize stake increment and decrement buttons
+document.getElementById("decrease-stake").addEventListener("click", () => {
+  const stakeInput = document.getElementById("stake");
+  const currentStake = parseFloat(stakeInput.value);
+  if (currentStake > 0.01) {
+    stakeInput.value = (currentStake - 0.01).toFixed(2);
+    updateTotalPotentialWinnings();
+  }
+});
 
 document.getElementById("increase-stake").addEventListener("click", () => {
   const stakeInput = document.getElementById("stake");
-  stakeInput.value = (parseFloat(stakeInput.value) + 0.01).toFixed(2);
+  const currentStake = parseFloat(stakeInput.value);
+  stakeInput.value = (currentStake + 0.01).toFixed(2);
   updateTotalPotentialWinnings();
 });
 
-document.getElementById("decrease-stake").addEventListener("click", () => {
-  const stakeInput = document.getElementById("stake");
-  const newValue = parseFloat(stakeInput.value) - 0.01;
-  stakeInput.value = newValue > 0 ? newValue.toFixed(2) : "0.01";
+// Initialize stake input change event
+document.getElementById("stake").addEventListener("change", () => {
   updateTotalPotentialWinnings();
 });

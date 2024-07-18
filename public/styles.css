@@ -110,6 +110,8 @@ body .navbar .category {
   border-radius: 10px;
 }
 
+/* END */
+
 .sidebar .bet {
   background-color: white;
   margin-bottom: 20px;
@@ -151,8 +153,15 @@ button:active {
   border-radius: 10px;
 }
 
+.bet-details {
+  display: none;
+  padding-top: 10px;
+}
+
 .bet {
   padding: 10px 0;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
 }
 
 .bet strong {
@@ -183,6 +192,8 @@ button {
 
 .stake-container button {
   background-color: rgba(128, 128, 128, 0.339);  border: none;
+  color: white;
+  border: none;
   padding: 5px 10px;
   cursor: pointer;
 }
