@@ -2,9 +2,9 @@ let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
+    `http://localhost:3000/totalizator1?game=${encodedGame}`,
+    `http://localhost:3000/totalizator2?game=${encodedGame}`,
+    `http://localhost:3000/totalizator3?game=${encodedGame}`
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
