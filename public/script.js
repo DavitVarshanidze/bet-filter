@@ -77,7 +77,6 @@ function updateTotalPotentialWinnings() {
   document.getElementById("total-potential-winnings").style.display = "block";
 }
 
-// Add selected bet to the sidebar
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const stakeInput = document.getElementById("stake");
@@ -118,7 +117,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   });
 
   betDiv.querySelector(".remove-bet").addEventListener("click", (event) => {
-    event.stopPropagation(); // Prevent triggering the toggle
+    event.stopPropagation(); 
     sidebar.removeChild(betDiv);
     selectedBets = selectedBets.filter(bet => bet.game !== game);
     updateTotalPotentialWinnings();
@@ -126,7 +125,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
 
   betDiv.querySelectorAll(".offer-button").forEach(button => {
     button.addEventListener("click", (event) => {
-      event.stopPropagation(); // Prevent triggering the toggle
+      event.stopPropagation();
       window.open(button.dataset.url, "_blank");
     });
   });

@@ -4,7 +4,7 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const cors = require('cors');
-app.use(cors()); // Enable CORS for all routes
+app.use(cors()); // CORS for all routes
 
 const totalizatorAPIs = [
   'https://api.totalizator1.com/',
