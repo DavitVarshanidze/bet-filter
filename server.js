@@ -2,10 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const path = require('path');
 const app = express();
-const cors = require('cors');
-const PORT = process.env.PORT || 3000;
-app.use(cors());
-
+const PORT = 3000;
 const totalizatorAPIs = [
   'https://api.totalizator1.com/odds',
   'https://api.totalizator2.com/odds',
@@ -26,20 +23,21 @@ app.get('/api/getOdds', async (req, res) => {
     res.json({
       games: [
         {
-          name: game,
+          name: "Game 1",
+          time: "22:45",
           odds1: odds[0],
           oddsX: odds[1],
           odds2: odds[2],
           bestOdds
         }
+        // add games here
       ]
     });
   } catch (error) {
-    console.error('Error fetching odds:', error);
-    res.status(500).send('Error');
+    res.status(500).send('error');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`port ${PORT}`);
 });
