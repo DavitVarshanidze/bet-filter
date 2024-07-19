@@ -3,6 +3,9 @@ const axios = require('axios');
 const path = require('path');
 const app = express();
 const PORT = 3000;
+const cors = require('cors');
+app.use(cors()); // Enable CORS for all routes
+
 const totalizatorAPIs = [
   'https://api.totalizator1.com/',
   'https://api.totalizator2.com/',
