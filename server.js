@@ -4,9 +4,9 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const totalizatorAPIs = [
-  'https://api.totalizator1.com/odds',
-  'https://api.totalizator2.com/odds',
-  'https://api.totalizator3.com/odds'
+  'https://api.totalizator1.com/',
+  'https://api.totalizator2.com/',
+  'https://api.totalizator3.com/'
 ];
 
 app.use(express.static(path.join(__dirname, 'public')));

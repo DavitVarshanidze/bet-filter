@@ -1,24 +1,16 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "server.js",
-        "use": "@vercel/node"
-      },
-      {
-        "src": "public/*",
-        "use": "@vercel/static"
-      }
-    ],
-    "routes": [
-      {
-        "src": "/api/getOdds",
-        "dest": "/server.js"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/public/$1"
-      }
-    ]
-  }
-  
+  "rewrites": [
+    {
+      "source": "/api/totalizator1",
+      "destination": "http://localhost:3000/totalizator1"
+    },
+    {
+      "source": "/api/totalizator2",
+      "destination": "http://localhost:3000/totalizator2"
+    },
+    {
+      "source": "/api/totalizator3",
+      "destination": "http://localhost:3000/totalizator3"
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
+  // Array of API endpoints
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
     `http://localhost:3000/totalizator2`,
     `http://localhost:3000/totalizator3`,
   ];
 
+  // Names and URLs corresponding to each API
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
   const totalizatorUrls = [
     "https://www.crystalbet.com/",
@@ -15,12 +17,16 @@ async function fetchTotalizatorOdds(game) {
   ];
 
   try {
+    // Fetch data from all APIs concurrently
     const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
 
+    // Process all responses
     const oddsData = await Promise.all(
       responses.map(async (response, index) => {
         if (response.ok) {
+          // Parse JSON data
           const data = await response.json();
+          // Find game odds
           const gameData = data.find(item => item.game === game);
           return {
             totalizator: totalizatorNames[index],
@@ -37,9 +43,11 @@ async function fetchTotalizatorOdds(game) {
     return oddsData;
   } catch (error) {
     console.error("Error fetching totalizator odds:", error);
+    // Return fallback data in case of error
     return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
   }
 }
+
 
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
