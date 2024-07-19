@@ -1,43 +1,25 @@
 let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
-  const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
-  ];
-
-  const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
-  const totalizatorUrls = [
-    "https://www.crystalbet.com/",
-    "https://www.betlive.com/en/home",
-    "https://crocobet.com/",
-  ];
+  const apiUrl = `https://your-vercel-deployment-url/api/getOdds?game=${game}`;
 
   try {
-    const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
-
-    const oddsData = await Promise.all(
-      responses.map(async (response, index) => {
-        if (response.ok) {
-          const data = await response.json();
-          const gameData = data.find(item => item.game === game);
-          return {
-            totalizator: totalizatorNames[index],
-            odds: gameData?.odds ?? "N/A",
-            url: totalizatorUrls[index]
-          };
-        } else {
-          console.error(`Error from ${totalizatorNames[index]}: ${response.statusText}`);
-          return { totalizator: totalizatorNames[index], odds: "N/A", url: totalizatorUrls[index] };
-        }
-      })
-    );
-
-    return oddsData;
+    const response = await fetch(apiUrl);
+    if (response.ok) {
+      const data = await response.json();
+      const oddsData = data.games.map((gameData, index) => ({
+        totalizator: `Totalizator ${index + 1}`,
+        odds: gameData[`odds${index + 1}`],
+        url: totalizatorUrls[index]
+      }));
+      return oddsData;
+    } else {
+      console.error('Error fetching odds:', response.statusText);
+      return [];
+    }
   } catch (error) {
-    console.error("Error fetching totalizator odds:", error);
-    return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
+    console.error('Error fetching totalizator odds:', error);
+    return [];
   }
 }
 
@@ -49,7 +31,7 @@ function updateTotalPotentialWinnings() {
   }
 
   const totalPotentialWinningsList = document.getElementById("total-potential-winnings-list");
-  totalPotentialWinningsList.innerHTML = ""; 
+  totalPotentialWinningsList.innerHTML = "";
 
   const totalizatorWinnings = {};
 
@@ -77,7 +59,6 @@ function updateTotalPotentialWinnings() {
   document.getElementById("total-potential-winnings").style.display = "block";
 }
 
-// Add selected bet to the sidebar
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const stakeInput = document.getElementById("stake");
@@ -99,7 +80,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
       <strong>${game}</strong><br>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
     </div>
-    <div class="bet-details">
+    <div class="bet-details" style="display: none;">
       <strong>ფსონი:</strong> ${stakeValue}<br>
       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
@@ -118,7 +99,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   });
 
   betDiv.querySelector(".remove-bet").addEventListener("click", (event) => {
-    event.stopPropagation(); // Prevent triggering the toggle
+    event.stopPropagation();
     sidebar.removeChild(betDiv);
     selectedBets = selectedBets.filter(bet => bet.game !== game);
     updateTotalPotentialWinnings();
@@ -126,7 +107,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
 
   betDiv.querySelectorAll(".offer-button").forEach(button => {
     button.addEventListener("click", (event) => {
-      event.stopPropagation(); // Prevent triggering the toggle
+      event.stopPropagation();
       window.open(button.dataset.url, "_blank");
     });
   });
