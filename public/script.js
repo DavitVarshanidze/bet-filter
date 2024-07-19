@@ -99,8 +99,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
     </div>
     <div class="bet-details">
-      <strong>ფსონი:</strong> ${stakeValue}<br>
-      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
