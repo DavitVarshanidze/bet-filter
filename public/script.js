@@ -1,44 +1,50 @@
-let selectedBets = [];
-
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
+    // Use HTTPS for secure connections
+    // Uncomment the following lines if your server is configured to use HTTPS
+    `https://localhost:3000/totalizator1`,
+    `https://localhost:3000/totalizator2`,
+    `https://localhost:3000/totalizator3`,
+  
+    // Use HTTP if you are not using HTTPS
+    // `http://localhost:3000/totalizator1`,
+    // `http://localhost:3000/totalizator2`,
+    // `http://localhost:3000/totalizator3`,
   ];
-
-  const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
-  const totalizatorUrls = [
-    "https://www.crystalbet.com/",
-    "https://www.betlive.com/en/home",
-    "https://crocobet.com/",
-  ];
-
-  try {
-    const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
-
-    const oddsData = await Promise.all(
-      responses.map(async (response, index) => {
-        if (response.ok) {
-          const data = await response.json();
-          const gameData = data.find(item => item.game === game);
-          return {
-            totalizator: totalizatorNames[index],
-            odds: gameData?.odds ?? "N/A",
-            url: totalizatorUrls[index]
-          };
-        } else {
-          console.error(`Error from ${totalizatorNames[index]}: ${response.statusText}`);
-          return { totalizator: totalizatorNames[index], odds: "N/A", url: totalizatorUrls[index] };
-        }
-      })
-    );
-
-    return oddsData;
-  } catch (error) {
-    console.error("Error fetching totalizator odds:", error);
-    return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
+  
+  async function fetchTotalizatorOdds(game) {
+    try {
+      const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
+  
+      const oddsData = await Promise.all(
+        responses.map(async (response, index) => {
+          if (response.ok) {
+            const data = await response.json();
+            const gameData = data.find(item => item.game === game);
+            return {
+              totalizator: `Totalizator ${index + 1}`,
+              odds: gameData?.odds ?? "N/A",
+              url: `https://www.example${index + 1}.com/`
+            };
+          } else {
+            console.error(`Error from Totalizator ${index + 1}: ${response.statusText}`);
+            return { totalizator: `Totalizator ${index + 1}`, odds: "N/A", url: `https://www.example${index + 1}.com/` };
+          }
+        })
+      );
+  
+      return oddsData;
+    } catch (error) {
+      console.error("Error fetching totalizator odds:", error);
+      return totalizatorAPIs.map((_, index) => ({ totalizator: `Totalizator ${index + 1}`, odds: "N/A", url: `https://www.example${index + 1}.com/` }));
+    }
   }
+  
+  fetch('https://localhost:3000/api/getOdds?game=someGame')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  
 }
 
 function updateTotalPotentialWinnings() {
@@ -83,7 +89,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("გთხოვთ შეიყვანოთ ფსონი");
+    alert("Please enter a valid stake.");
     return;
   }
 
@@ -96,16 +102,16 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div>
       <strong>${game}</strong><br>
-      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
+      <strong>Odds:</strong> ${minOdds} - ${maxOdds}
     </div>
     <div class="bet-details">
-      <strong>შეთავაზებები:</strong>
+      <strong>Offers:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
-      <button class="remove-bet">წაშლა</button>
+      <button class="remove-bet">Remove</button>
     </div>
   `;
 
@@ -162,3 +168,9 @@ document.getElementById("increase-stake").addEventListener("click", () => {
 document.getElementById("stake").addEventListener("change", () => {
   updateTotalPotentialWinnings();
 });
+
+// Ensure that `fetch` uses HTTPS and handle CORS issues
+fetch('https://localhost:3000/api/getOdds?game=someGame')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
