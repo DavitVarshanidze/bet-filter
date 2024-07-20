@@ -1,19 +1,5 @@
 let selectedBets = [];
 
-const config = {
-  development: {
-    apiUrl: 'https://localhost:3000/totalizator1'
-  },
-  production: {
-    apiUrl: 'https://bet-filter.vercel.app/totalizator1'
-  }
-};
-
-const environment = window.location.hostname === 'localhost' ? 'development' : 'production';
-const apiUrl = config[environment].apiUrl;
-
- //
-
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
