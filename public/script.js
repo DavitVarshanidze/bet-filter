@@ -18,9 +18,9 @@ async function fetchTotalizatorOdds(game) {
   }
 
   const totalizatorAPIs = [
-    `${window.env.API_URL}/totalizator1`,
-    `${window.env.API_URL}/totalizator2`,
-    `${window.env.API_URL}/totalizator3`,
+    `http://localhost:3000/totalizator1`,
+    `http://localhost:3000/totalizator2`,
+    `http://localhost:3000/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
