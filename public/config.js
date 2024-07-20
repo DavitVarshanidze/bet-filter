@@ -1,15 +1,21 @@
-// config.js
 const config = {
-    development: {
-      apiUrl: 'http://localhost:3000/totalizator1'
-    },
-    production: {
-      apiUrl: 'https://your-production-api.com/totalizator1'
+  development: {
+    apiUrl: 'http://localhost:3000/totalizator1'
+  },
+  production: {
+    apiUrl: 'https://bet-filter.vercel.app/totalizator1'
+  }
+};
+
+const environment = window.location.hostname === 'localhost' ? 'development' : 'production';
+const apiUrl = config[environment].apiUrl;
+
+fetch(apiUrl)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
-  
-  const environment = window.location.hostname === 'localhost' ? 'development' : 'production';
-  const apiUrl = config[environment].apiUrl;
-  
-  export { apiUrl };
-  
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
