@@ -2,7 +2,7 @@
 
 const config = {
   development: {
-    apiUrl: 'http://localhost:3000/totalizator1'
+    apiUrl: 'https://localhost:3000/totalizator1'
   },
   production: {
     apiUrl: 'https://bet-filter.vercel.app/totalizator1'

@@ -1,10 +1,12 @@
 let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
+  const vercelDomain = process.env.API_URL || 'https://bet-filter.vercel.app'; // Example for Vercel
+
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
+    `https://bet-filter.vercel.app/totalizator1`,
+    `https://bet-filter.vercel.app/totalizator2`,
+    `https://bet-filter.vercel.app/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
@@ -49,7 +51,7 @@ function updateTotalPotentialWinnings() {
   }
 
   const totalPotentialWinningsList = document.getElementById("total-potential-winnings-list");
-  totalPotentialWinningsList.innerHTML = ""; 
+  totalPotentialWinningsList.innerHTML = "";
 
   const totalizatorWinnings = {};
 
@@ -115,7 +117,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   });
 
   betDiv.querySelector(".remove-bet").addEventListener("click", (event) => {
-    event.stopPropagation(); 
+    event.stopPropagation();
     sidebar.removeChild(betDiv);
     selectedBets = selectedBets.filter(bet => bet.game !== game);
     updateTotalPotentialWinnings();
