@@ -5,7 +5,12 @@ const app = express();
 const PORT = 3000;
 const cors = require('cors');
 
-app.use(cors()); // Enable CORS for all routes
+const corsOptions = {
+  origin: "https://bet-filter.vercel.app/",
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(express.static(path.join(__dirname, 'public')));
 
 const totalizatorAPIs = [
