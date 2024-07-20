@@ -1,10 +1,19 @@
-const totalizatorAPIs = [
-  `https://localhost:3000/totalizator1`,
-  `https://localhost:3000/totalizator2`,
-  `https://localhost:3000/totalizator3`,
-];
+let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
+  const totalizatorAPIs = [
+    `http://localhost:3000/totalizator1`,
+    `http://localhost:3000/totalizator2`,
+    `http://localhost:3000/totalizator3`,
+  ];
+
+  const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
+  const totalizatorUrls = [
+    "https://www.crystalbet.com/",
+    "https://www.betlive.com/en/home",
+    "https://crocobet.com/",
+  ];
+
   try {
     const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
 
@@ -14,13 +23,13 @@ async function fetchTotalizatorOdds(game) {
           const data = await response.json();
           const gameData = data.find(item => item.game === game);
           return {
-            totalizator: `Totalizator ${index + 1}`,
+            totalizator: totalizatorNames[index],
             odds: gameData?.odds ?? "N/A",
-            url: `https://www.example${index + 1}.com/`
+            url: totalizatorUrls[index]
           };
         } else {
-          console.error(`Error from Totalizator ${index + 1}: ${response.statusText}`);
-          return { totalizator: `Totalizator ${index + 1}`, odds: "N/A", url: `https://www.example${index + 1}.com/` };
+          console.error(`Error from ${totalizatorNames[index]}: ${response.statusText}`);
+          return { totalizator: totalizatorNames[index], odds: "N/A", url: totalizatorUrls[index] };
         }
       })
     );
@@ -28,14 +37,9 @@ async function fetchTotalizatorOdds(game) {
     return oddsData;
   } catch (error) {
     console.error("Error fetching totalizator odds:", error);
-    return totalizatorAPIs.map((_, index) => ({ totalizator: `Totalizator ${index + 1}`, odds: "N/A", url: `https://www.example${index + 1}.com/` }));
+    return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
   }
 }
-
-fetch('https://localhost:3000/api/getOdds?game=someGame')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
 
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
@@ -79,7 +83,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("Please enter a valid stake.");
+    alert("გთხოვთ შეიყვანოთ ფსონი");
     return;
   }
 
@@ -92,16 +96,16 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div>
       <strong>${game}</strong><br>
-      <strong>Odds:</strong> ${minOdds} - ${maxOdds}
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
     </div>
     <div class="bet-details">
-      <strong>Offers:</strong>
+      <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
-      <button class="remove-bet">Remove</button>
+      <button class="remove-bet">წაშლა</button>
     </div>
   `;
 
