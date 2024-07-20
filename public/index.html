@@ -183,20 +183,30 @@
     </div>
     <div class="bet-container">
       <div class="stake-container">
-          <button id="decrease-stake">-</button>
-          <button id="increase-stake">+</button>
-          ფსონი
-          <input type="number" id="stake" class="stake-input" value="1" min="0.01" step="0.01">
+        <button id="decrease-stake">-</button>
+        <button id="increase-stake">+</button>
+        ფსონი
+        <input type="number" id="stake" class="stake-input" value="1" min="0.01" step="0.01">
       </div>
 
       <div id="selected-bets" class="selected-bets"></div>
       <div id="total-potential-winnings" class="total-potential-winnings" style="display:none;">
-          <h3>საუკეთესო კოეფიციენტი/საერთო შესაძლო მოგება:</h3>
-          <div id="total-potential-winnings-list"></div>
+        <h3>საუკეთესო კოეფიციენტი/საერთო შესაძლო მოგება:</h3>
+        <div id="total-potential-winnings-list"></div>
       </div>
-  </div>
+    </div>
 
-    <script defer src="script.js"></script>
+    <script src="./env.js"></script>
+    <script>
+      // Ensure env.js has loaded before running any other scripts
+      document.addEventListener("DOMContentLoaded", function () {
+        // Check if window.env is defined
+        if (!window.env) {
+          console.error("Environment variables are not defined. Make sure /env.js is loaded properly.");
+        }
+      });
+    </script>
+    <script src="./script.js" defer></script>
 </body>
 
 </html>

@@ -1,12 +1,26 @@
 let selectedBets = [];
 
+function ensureEnvVariables() {
+  return new Promise((resolve, reject) => {
+    if (window.env && window.env.API_URL) {
+      resolve();
+    } else {
+      reject('Environment variables not loaded');
+    }
+  });
+}
+
 async function fetchTotalizatorOdds(game) {
-  const vercelDomain = process.env.API_URL || 'https://bet-filter.vercel.app'; // Example for Vercel
+
+  if (!window.env || !window.env.API_URL) {
+    console.error("API_URL is not defined in the environment variables.");
+    return [];
+  }
 
   const totalizatorAPIs = [
-    `https://bet-filter.vercel.app/totalizator1`,
-    `https://bet-filter.vercel.app/totalizator2`,
-    `https://bet-filter.vercel.app/totalizator3`,
+    `${window.env.API_URL}/totalizator1`,
+    `${window.env.API_URL}/totalizator2`,
+    `${window.env.API_URL}/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
