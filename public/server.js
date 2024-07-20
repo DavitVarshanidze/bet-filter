@@ -3,12 +3,12 @@ const fs = require('fs');
 const https = require('https');
 const cors = require('cors');
 const path = require('path');
+const http = require('http');
 
 const app = express();
 const PORT = 3000;
 
 // SSL options for HTTPS
-// Comment out these lines if you don't want to use HTTPS
 const sslOptions = {
   key: fs.readFileSync('./server.key'),
   cert: fs.readFileSync('./server.cert'),
@@ -16,7 +16,7 @@ const sslOptions = {
 
 // CORS options
 const corsOptions = {
-  origin: ['https://bet-filter.vercel.app', 'https://localhost:3000'],
+  origin: ['https://bet-filter.vercel.app'], // Adjusted for HTTPS
   optionsSuccessStatus: 200
 };
 
@@ -34,13 +34,11 @@ app.get('/api/getOdds', (req, res) => {
 });
 
 // Create an HTTPS server
-// Comment out this section if you want to use HTTP instead of HTTPS
 https.createServer(sslOptions, app).listen(PORT, () => {
   console.log(`HTTPS server running on port ${PORT}`);
 });
 
-// Create an HTTP server (uncomment this if you want to switch to HTTP)
-// const http = require('http');
+// Uncomment for HTTP (ensure not using HTTP when using HTTPS in production)
 // http.createServer(app).listen(PORT, () => {
 //   console.log(`HTTP server running on port ${PORT}`);
 // });
