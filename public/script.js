@@ -12,30 +12,7 @@ const config = {
 const environment = window.location.hostname === 'localhost' ? 'development' : 'production';
 const apiUrl = config[environment].apiUrl;
 
-fetch(apiUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
-
-// script.js
-import { apiUrl } from './config.js';
-
-fetch(apiUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(`error status: ${response.status}`);
-    }
-    return response.json();
-  })
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error));
-
+ //
 
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
