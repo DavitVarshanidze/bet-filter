@@ -1,9 +1,15 @@
 let selectedBets = [];
 
-const apiUrl = window.location.hostname === 'localhost' ? 'http://localhost:3000/totalizator1' : 'https://bet-filter.vercel.app/totalizator1';
+// script.js
+import { apiUrl } from './config.js';
 
 fetch(apiUrl)
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  })
   .then(data => console.log(data))
   .catch(error => console.error('Error:', error));
 
