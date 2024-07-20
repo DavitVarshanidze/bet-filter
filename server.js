@@ -4,7 +4,9 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 const cors = require('cors');
-app.use(cors()); // CORS for all routes
+
+app.use(cors()); // Enable CORS for all routes
+app.use(express.static(path.join(__dirname, 'public')));
 
 const totalizatorAPIs = [
   'https://api.totalizator1.com/',
@@ -12,14 +14,11 @@ const totalizatorAPIs = [
   'https://api.totalizator3.com/'
 ];
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('/api/getOdds', async (req, res) => {
   const game = req.query.game;
   try {
     const promises = totalizatorAPIs.map(api => axios.get(`${api}?game=${game}`));
     const results = await Promise.all(promises);
-
     const odds = results.map(result => result.data.odds);
     const bestOdds = Math.max(...odds);
 
@@ -33,14 +32,13 @@ app.get('/api/getOdds', async (req, res) => {
           odds2: odds[2],
           bestOdds
         }
-        // add games here
       ]
     });
   } catch (error) {
-    res.status(500).send('error');
+    res.status(500).send('Error retrieving odds');
   }
 });
 
 app.listen(PORT, () => {
-  console.log(`port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
