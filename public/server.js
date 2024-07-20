@@ -21,9 +21,12 @@ https.createServer(options, app).listen(3000, () => {
 });
 
 const corsOptions = {
-  origin: "https://bet-filter.vercel.app/",
+  origin: ['https://bet-filter.vercel.app', 'https://localhost:3000'],
   optionsSuccessStatus: 200
 };
+
+app.use(cors(corsOptions));
+
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
@@ -31,6 +34,21 @@ app.listen(3000, () => {
 
 app.use(cors(corsOptions)); // Enable CORS for all routes
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Read the SSL certificate and key
+const sslOptions = {
+  key: fs.readFileSync('../key.pem'),
+  cert: fs.readFileSync('../cert.pem')
+};
+
+app.get('/totalizator1', (req, res) => {
+  res.json({ message: 'Hello from HTTPS server' });
+});
+
+// Create an HTTPS server
+https.createServer(sslOptions, app).listen(3000, () => {
+  console.log('HTTPS server running on port 3000');
+});
 
 const totalizatorAPIs = [
   'https://api.totalizator1.com/',
