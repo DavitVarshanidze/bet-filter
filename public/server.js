@@ -6,7 +6,6 @@ const path = require('path');
 const app = express();
 const PORT = 3000;
 
-// SSL options
 const sslOptions = {
   key: fs.readFileSync('./server.key'),
   cert: fs.readFileSync('./server.cert'),
@@ -22,7 +21,6 @@ app.get('/api/getOdds', (req, res) => {
   res.json({ message: 'Odds data' });
 });
 
-// Create HTTPS server
 https.createServer(sslOptions, app).listen(PORT, () => {
   console.log(`HTTPS server running on port ${PORT}`);
 });

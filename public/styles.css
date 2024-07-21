@@ -212,3 +212,89 @@ button {
   padding: 20px;
   margin-bottom: 20px;
 }
+
+.bet {
+  padding: 10px;
+  border: 2px solid rgb(61, 61, 61); 
+  border-radius: 5px; 
+  margin-bottom: 10px; 
+}
+
+.bet strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.bet-details {
+  display: none; 
+  padding: 10px;
+  background: #f9f9f9; 
+  border-radius: 5px; 
+}
+
+.offers {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.offers li {
+  margin-bottom: 5px;
+}
+
+button {
+  margin-top: 10px;
+  margin-right: 5px;
+  background-color: #007bff; 
+  color: #fff; 
+  border: none; 
+  padding: 10px 15px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+}
+
+button:hover {
+  background-color: #0056b3; 
+}
+
+.bet button.remove-bet {
+  background-color: #dc3545; 
+  color: #fff; 
+}
+
+.bet button.remove-bet:hover {
+  background-color: #c82333; 
+}
+
+.bet-details .offer-button {
+  background-color: #28a745; 
+  color: #fff; 
+}
+
+.bet-details .offer-button:hover {
+  background-color: #218838; 
+}
+
+#stake-container {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#decrease-stake, #increase-stake {
+  background-color: #6c757d; 
+  color: #fff; 
+  border: none; 
+  padding: 5px 10px; 
+  cursor: pointer; 
+  border-radius: 5px; 
+}
+
+#stake {
+  width: 100px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px; 
+  padding: 5px;
+  margin: 0 5px; 
+}

@@ -103,6 +103,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
     return;
   }
 
+  const existingBetIndex = selectedBets.findIndex(bet => bet.game === game);
+  if (existingBetIndex !== -1) {
+    // Remove the existing bet
+    sidebar.removeChild(sidebar.children[existingBetIndex]);
+    selectedBets.splice(existingBetIndex, 1);
+  }
+
   const avgOdds = (minOdds + maxOdds) / 2;
   const potentialWinnings = (avgOdds * stakeValue).toFixed(2);
   const totalizatorOdds = await fetchTotalizatorOdds(game);
@@ -113,8 +120,10 @@ async function addToSidebar(game, minOdds, maxOdds) {
     <div>
       <strong>${game}</strong><br>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
-    </div>
-    <div class="bet-details">
+      </div><br>
+      <div class="bet-details">
+      <strong>ფსონი:</strong> ${stakeValue}<br>
+      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
