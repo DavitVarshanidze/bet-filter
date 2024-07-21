@@ -1,9 +1,9 @@
 async function fetchTotalizatorOdds(game) {
   const encodedGame = encodeURIComponent(game);
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1?game=${encodedGame}`,
-    `http://localhost:3000/totalizator2?game=${encodedGame}`,
-    `http://localhost:3000/totalizator3?game=${encodedGame}`,
+    `https://localhost:3000/totalizator1?game=${encodedGame}`,
+    `https://localhost:3000/totalizator2?game=${encodedGame}`,
+    `https://localhost:3000/totalizator3?game=${encodedGame}`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
