@@ -105,7 +105,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
 
   const existingBetIndex = selectedBets.findIndex(bet => bet.game === game);
   if (existingBetIndex !== -1) {
-    // Remove the existing bet
     sidebar.removeChild(sidebar.children[existingBetIndex]);
     selectedBets.splice(existingBetIndex, 1);
   }
