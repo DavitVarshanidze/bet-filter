@@ -2,9 +2,9 @@ let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `https://localhost:3000/totalizator1`,
-    `https://localhost:3000/totalizator2`,
-    `https://localhost:3000/totalizator3`,
+    `https://bet-filter.vercel.app/totalizator1`,
+    `https://bet-filter.vercel.app/totalizator2`,
+    `https://bet-filter.vercel.app/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
