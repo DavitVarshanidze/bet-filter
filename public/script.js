@@ -2,9 +2,9 @@ let selectedBets = [];
 
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `https://bet-filter.vercel.app/totalizator1`,
-    `https://bet-filter.vercel.app/totalizator2`,
-    `https://bet-filter.vercel.app/totalizator3`,
+    `http://localhost:3000/totalizator1`,
+    `http://localhost:3000/totalizator2`,
+    `http://localhost:3000/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
@@ -21,6 +21,7 @@ async function fetchTotalizatorOdds(game) {
       responses.map(async (response, index) => {
         if (response.ok) {
           const data = await response.json();
+          console.log(`Data from ${totalizatorNames[index]}:`, data);
           const gameData = data.find(item => item.game === game);
           return {
             totalizator: totalizatorNames[index],
