@@ -1,26 +1,10 @@
 let selectedBets = [];
 
-function ensureEnvVariables() {
-  return new Promise((resolve, reject) => {
-    if (window.env && window.env.API_URL) {
-      resolve();
-    } else {
-      reject('Environment variables not loaded');
-    }
-  });
-}
-
 async function fetchTotalizatorOdds(game) {
-
-  if (!window.env || !window.env.API_URL) {
-    console.error("API_URL is not defined in the environment variables.");
-    return [];
-  }
-
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
+    `https://localhost:3000/totalizator1`,
+    `https://localhost:3000/totalizator2`,
+    `https://localhost:3000/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
