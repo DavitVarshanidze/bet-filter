@@ -21,7 +21,6 @@ async function fetchTotalizatorOdds(game) {
       responses.map(async (response, index) => {
         if (response.ok) {
           const data = await response.json();
-          console.log(`Data from ${totalizatorNames[index]}:`, data);
           const gameData = data.find(item => item.game === game);
           return {
             totalizator: totalizatorNames[index],
@@ -101,11 +100,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const betDiv = document.createElement("div");
   betDiv.classList.add("bet");
   betDiv.innerHTML = `
-    <div>
-      <strong>${game}</strong><br>
-      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}
-      </div><br>
-      <div class="bet-details">
+    <div class="bet-header">
+      <strong>${game}</strong>
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
+      <button class="remove-bet">X</button>
+    </div>
+    <button class="toggle-details">&#9660;</button>
+    <div class="bet-details">
       <strong>ფსონი:</strong> ${stakeValue}<br>
       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
@@ -114,11 +115,11 @@ async function addToSidebar(game, minOdds, maxOdds) {
           <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
-      <button class="remove-bet">წაშლა</button>
     </div>
   `;
+  
 
-  betDiv.addEventListener("click", () => {
+  betDiv.querySelector(".toggle-details").addEventListener("click", () => {
     const details = betDiv.querySelector(".bet-details");
     details.style.display = details.style.display === "none" ? "block" : "none";
   });

@@ -1,5 +1,3 @@
-// script.js
-
 const config = {
   development: {
     apiUrl: 'https://localhost:3000/totalizator1'
