@@ -213,7 +213,7 @@ button {
 
 .bet {
   padding: 10px;
-  border: 2px solid rgb(61, 61, 61);
+  border: 2px solid rgba(0, 0, 0, 0.497);
   border-radius: 5px;
   margin-bottom: 10px;
 }
@@ -284,9 +284,18 @@ button:hover {
   background-color: #6c757d;
   color: #fff;
   border: none;
-  padding: 5px 10px;
+  padding: 6px 10px;
+  width: 2em;
   cursor: pointer;
   border-radius: 5px;
+}
+
+#increase-stake:hover {
+  background-color: #383d41;
+}
+
+#decrease-stake:hover {
+  background-color: #383d41;
 }
 
 #stake {
@@ -300,12 +309,15 @@ button:hover {
 
 .bet-header {
   position: relative;
+  width: 280px;
+  height: 80px;
 }
 
 .bet .remove-bet {
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: 0px;
+  right: 0px;
+  font-size: 0.8em;
   background: none;
   border: none;
   cursor: pointer;
@@ -314,12 +326,17 @@ button:hover {
 
 .bet .toggle-details {
   position: relative;
-  display: block;
-  margin: 10px auto 0;
-  border-top: 1px solid #ccc;
-  width: 100%;
+  left: 90px;
+  bottom: 30px;
+  width: 100px;
+  height: 55px;
+  font-size: 2.2em;
   text-align: center;
   background: none;
-  border: none;
   cursor: pointer;
+  color: rgb(36, 36, 36);
+  border-radius: 5px;
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
 }
