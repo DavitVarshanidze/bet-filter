@@ -190,7 +190,6 @@ button {
   background-color: rgba(128, 128, 128, 0.339);
   border: none;
   color: white;
-  border: none;
   padding: 5px 10px;
   cursor: pointer;
 }
@@ -209,102 +208,40 @@ button {
   background: rgb(253, 224, 83);
   padding: 20px;
   margin-bottom: 20px;
+  border-radius: 10px;
 }
 
-.bet {
-  padding: 10px;
-  border: 2px solid rgba(0, 0, 0, 0.497);
-  border-radius: 5px;
+.total-potential-winnings-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.winnings-item {
   margin-bottom: 10px;
 }
 
-.bet strong {
+.winnings-link {
+  color: #000; 
+  text-decoration: none;
+  font-weight: bold;
   display: block;
-  margin-bottom: 5px;
-}
-
-.bet-details {
-  display: none;
-  padding: 10px;
-  background: #f9f9f9;
-  border-radius: 5px;
-}
-
-.offers {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-}
-
-.offers li {
-  margin-bottom: 5px;
-}
-
-button {
-  margin-top: 10px;
-  margin-right: 5px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-.bet button.remove-bet {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.bet button.remove-bet:hover {
-  background-color: #c82333;
-}
-
-.bet-details .offer-button {
-  background-color: #28a745;
-  color: #fff;
-}
-
-.bet-details .offer-button:hover {
-  background-color: #218838;
-}
-
-#stake-container {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-#decrease-stake,
-#increase-stake {
-  background-color: #6c757d;
-  color: #fff;
-  border: none;
-  padding: 6px 10px;
-  width: 2em;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-#increase-stake:hover {
-  background-color: #383d41;
-}
-
-#decrease-stake:hover {
-  background-color: #383d41;
-}
-
-#stake {
-  width: 100px;
-  text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 5px;
-  margin: 0 5px;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.winnings-link:hover {
+  text-decoration: underline;
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+.winnings-link.best-offer {
+  color: #28a745; 
+  border: 2px solid #28a745;
+}
+
+.winnings-link.best-offer:hover {
+  background-color: rgba(40, 167, 69, 0.1);
 }
 
 .bet-header {
@@ -313,7 +250,7 @@ button:hover {
   height: 90px;
 }
 
-.bet .remove-bet {
+.remove-bet {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -322,11 +259,19 @@ button:hover {
   right: 0px;
   font-size: 0.8em;
   background: none;
-  border: none;
-  cursor: pointer;
-  color: red;
+  border: 2px solid red; 
+  color: red; 
   width: 33px;
   height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.3s, border-color 0.3s;
+}
+
+.remove-bet:hover {
+  color: white; 
+  background-color: red; 
+  border-color: red; 
 }
 
 .bet .toggle-details {
@@ -334,7 +279,7 @@ button:hover {
   left: 90px;
   bottom: 30px;
   width: 100px;
-  font-size: 2.2em;
+  font-size: 2.7em;
   text-align: center;
   background: none;
   cursor: pointer;
@@ -343,4 +288,24 @@ button:hover {
   border-bottom: none;
   border-left: none;
   border-right: none;
+}
+
+.bet {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid transparent; 
+  transition: border-color 0.3s; 
+}
+
+.bet {
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.bet:hover {
+  transform: scale(1.04);
 }

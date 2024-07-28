@@ -1,5 +1,6 @@
 let selectedBets = [];
 
+// Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
@@ -41,6 +42,7 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
+// Update total potential winnings in the sidebar
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
   if (isNaN(stakeValue) || stakeValue <= 0) {
@@ -66,17 +68,18 @@ function updateTotalPotentialWinnings() {
 
   sortedWinnings.forEach((offer, index) => {
     const div = document.createElement("div");
-    div.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
-    if (index === 0) {
-      div.style.width = "130px";
-      div.style.border = "3px solid green";
-    }
+    const link = document.createElement("a");
+    link.href = offer.totalizator === sortedWinnings[0].totalizator ? offer.url : "#";
+    link.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
+    link.className = index === 0 ? "winnings-link best-offer" : "winnings-link";
+    div.appendChild(link);
     totalPotentialWinningsList.appendChild(div);
   });
 
   document.getElementById("total-potential-winnings").style.display = "block";
 }
 
+// Add a bet to the sidebar
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const stakeInput = document.getElementById("stake");
@@ -104,20 +107,28 @@ async function addToSidebar(game, minOdds, maxOdds) {
       <strong>${game}</strong>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
       <button class="remove-bet">X</button>
-      <button class="toggle-details">&#8615;</button>
-      </div>
-      <div class="bet-details">
+      <button class="toggle-details">&#42780;</button>
+    </div>
+    <div class="bet-details">
       <strong>ფსონი:</strong> ${stakeValue}<br>
       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
-          <li><button class="offer-button" data-url="${offer.url}">${offer.totalizator}: ${offer.odds}</button></li>
+          <li><button class="offer-button" data-url="${offer.url}" data-odds="${offer.odds}">${offer.totalizator}: ${offer.odds}</button></li>
         `).join("")}
       </ul>
     </div>
   `;
-  
+
+  // Determine the best offer
+  const offers = betDiv.querySelectorAll(".offer-button");
+  if (offers.length > 0) {
+    const bestOffer = [...offers].reduce((best, current) => {
+      return parseFloat(current.dataset.odds) > parseFloat(best.dataset.odds) ? current : best;
+    });
+    bestOffer.classList.add("best-offer");
+  }
 
   betDiv.querySelector(".toggle-details").addEventListener("click", () => {
     const details = betDiv.querySelector(".bet-details");
@@ -144,6 +155,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   updateTotalPotentialWinnings();
 }
 
+// Event listeners for buttons and stake input
 document.querySelectorAll(".odds-display button").forEach(button => {
   button.addEventListener("click", async () => {
     const game = button.dataset.game;
