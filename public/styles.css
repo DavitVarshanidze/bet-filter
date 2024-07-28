@@ -47,6 +47,46 @@ body .navbar .category {
   width: 100%;
 }
 
+.category {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  margin: 10px;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+}
+
+.category:hover {
+  background-color: rgb(253, 224, 83);
+  transform: scale(1.05);
+}
+
+.category::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: transparent;
+  transition: width 0.3s ease, left 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.category:hover::after {
+  width: 0;
+}
+
+.category:active {
+  background-color: rgb(171, 152, 59);;
+}
+
 @media (max-width: 1200px) {
   .category {
     flex: 1 1 15%;
