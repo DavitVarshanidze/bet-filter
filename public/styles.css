@@ -310,11 +310,14 @@ button:hover {
 .bet-header {
   position: relative;
   width: 280px;
-  height: 80px;
+  height: 90px;
 }
 
 .bet .remove-bet {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   top: 0px;
   right: 0px;
   font-size: 0.8em;
@@ -322,6 +325,8 @@ button:hover {
   border: none;
   cursor: pointer;
   color: red;
+  width: 33px;
+  height: 30px;
 }
 
 .bet .toggle-details {
@@ -329,7 +334,6 @@ button:hover {
   left: 90px;
   bottom: 30px;
   width: 100px;
-  height: 55px;
   font-size: 2.2em;
   text-align: center;
   background: none;

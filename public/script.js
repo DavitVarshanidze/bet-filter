@@ -104,7 +104,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
       <strong>${game}</strong>
       <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
       <button class="remove-bet">X</button>
-      <button class="toggle-details">&#42780;</button>
+      <button class="toggle-details">&#8615;</button>
       </div>
       <div class="bet-details">
       <strong>ფსონი:</strong> ${stakeValue}<br>
