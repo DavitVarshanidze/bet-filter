@@ -110,7 +110,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
       <button class="toggle-details">&#42780;</button>
     </div>
     <div class="bet-details">
-      <strong>ფსონი:</strong> ${stakeValue}<br>
       <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
       <strong>შეთავაზებები:</strong>
       <ul class="offers">
