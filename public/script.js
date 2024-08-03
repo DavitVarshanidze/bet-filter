@@ -3,16 +3,16 @@ let selectedBets = [];
 // Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `/totalizator1`,
-    `/totalizator2`,
-    `/totalizator3`
+    `http://localhost:3000/totalizator1`,
+    `http://localhost:3000/totalizator2`,
+    `http://localhost:3000/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
   const totalizatorUrls = [
     "https://www.crystalbet.com/",
     "https://www.betlive.com/en/home",
-    "https://crocobet.com/"
+    "https://crocobet.com/",
   ];
 
   try {
@@ -69,7 +69,7 @@ function updateTotalPotentialWinnings() {
   sortedWinnings.forEach((offer, index) => {
     const div = document.createElement("div");
     const link = document.createElement("a");
-    link.href = offer.url;
+    link.href = offer.totalizator === sortedWinnings[0].totalizator ? offer.url : "#";
     link.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
     link.className = index === 0 ? "winnings-link best-offer" : "winnings-link";
     div.appendChild(link);
