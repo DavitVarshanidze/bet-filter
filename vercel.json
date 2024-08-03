@@ -1,15 +1,15 @@
 {
     "rewrites": [
       {
-        "source": "/api/totalizator1",
+        "source": "/totalizator1",
         "destination": "http://localhost:3000/totalizator1"
       },
       {
-        "source": "/api/totalizator2",
+        "source": "/totalizator2",
         "destination": "http://localhost:3000/totalizator2"
       },
       {
-        "source": "/api/totalizator3",
+        "source": "/totalizator3",
         "destination": "http://localhost:3000/totalizator3"
       }
     ]
