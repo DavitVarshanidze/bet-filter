@@ -3,35 +3,43 @@ let selectedBets = [];
 // Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    { url: `/api/totalizator1`, name: "Crystalbet", website: "https://www.crystalbet.com/" },
-    { url: `/api/totalizator2`, name: "Betlive", website: "https://www.betlive.com/en/home" },
-    { url: `/api/totalizator3`, name: "Crocobet", website: "https://crocobet.com/" },
+    `/totalizator1`,
+    `/totalizator2`,
+    `/totalizator3`
   ];
 
-  const oddsData = [];
+  const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
+  const totalizatorUrls = [
+    "https://www.crystalbet.com/",
+    "https://www.betlive.com/en/home",
+    "https://crocobet.com/"
+  ];
 
-  for (const totalizator of totalizatorAPIs) {
-    try {
-      const response = await fetch(totalizator.url);
-      if (response.ok) {
-        const data = await response.json();
-        const gameData = data.find(item => item.game === game);
-        oddsData.push({
-          totalizator: totalizator.name,
-          odds: gameData?.odds ?? "N/A",
-          url: totalizator.website
-        });
-      } else {
-        console.error(`Error from ${totalizator.name}: ${response.statusText}`);
-        oddsData.push({ totalizator: totalizator.name, odds: "N/A", url: totalizator.website });
-      }
-    } catch (error) {
-      console.error(`Error fetching data from ${totalizator.name}:`, error);
-      oddsData.push({ totalizator: totalizator.name, odds: "N/A", url: totalizator.website });
-    }
+  try {
+    const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
+
+    const oddsData = await Promise.all(
+      responses.map(async (response, index) => {
+        if (response.ok) {
+          const data = await response.json();
+          const gameData = data.find(item => item.game === game);
+          return {
+            totalizator: totalizatorNames[index],
+            odds: gameData?.odds ?? "N/A",
+            url: totalizatorUrls[index]
+          };
+        } else {
+          console.error(`Error from ${totalizatorNames[index]}: ${response.statusText}`);
+          return { totalizator: totalizatorNames[index], odds: "N/A", url: totalizatorUrls[index] };
+        }
+      })
+    );
+
+    return oddsData;
+  } catch (error) {
+    console.error("Error fetching totalizator odds:", error);
+    return totalizatorNames.map((name, index) => ({ totalizator: name, odds: "N/A", url: totalizatorUrls[index] }));
   }
-
-  return oddsData;
 }
 
 // Update total potential winnings in the sidebar
@@ -61,7 +69,7 @@ function updateTotalPotentialWinnings() {
   sortedWinnings.forEach((offer, index) => {
     const div = document.createElement("div");
     const link = document.createElement("a");
-    link.href = offer.totalizator === sortedWinnings[0].totalizator ? offer.url : "#";
+    link.href = offer.url;
     link.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
     link.className = index === 0 ? "winnings-link best-offer" : "winnings-link";
     div.appendChild(link);
