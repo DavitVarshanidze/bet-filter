@@ -2,21 +2,30 @@ let selectedBets = [];
 
 // Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
-  const totalizatorAPIs = [
-    `https://127.0.0.1:8080/totalizator1`,
-    `https://127.0.0.1:8080/totalizator2`,
-    `https://127.0.0.1:8080/totalizator3`,
-  ];
+  fetch('https://127.0.0.1:8080/totalizator1', { mode: 'no-cors' })
+  .then(response => {
+    // Handle opaque response
+  });
+  fetch('https://127.0.0.1:8080/totalizator2', { mode: 'no-cors' })
+  .then(response => {
+    // Handle opaque response
+  });
+  fetch('https://127.0.0.1:8080/totalizator3', { mode: 'no-cors' })
+  .then(response => {
+    // Handle opaque response
+  });
+ 
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
   const totalizatorUrls = [
     "https://www.crystalbet.com/",
     "https://www.betlive.com/en/home",
-    "https://crocobet.com/",
+    "https://crocobet.com/"
   ];
 
   try {
     const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
+
     const oddsData = await Promise.all(
       responses.map(async (response, index) => {
         if (response.ok) {
@@ -68,7 +77,7 @@ function updateTotalPotentialWinnings() {
   sortedWinnings.forEach((offer, index) => {
     const div = document.createElement("div");
     const link = document.createElement("a");
-    link.href = offer.totalizator === sortedWinnings[0].totalizator ? offer.url : "#";
+    link.href = offer.url;
     link.textContent = `${offer.totalizator}: ${offer.winnings.toFixed(2)}`;
     link.className = index === 0 ? "winnings-link best-offer" : "winnings-link";
     div.appendChild(link);
@@ -85,7 +94,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("Please enter a valid stake.");
+    alert("გთხოვთ შეიყვანოთ ფსონი");
     return;
   }
 
@@ -104,13 +113,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div class="bet-header">
       <strong>${game}</strong>
-      <strong>Odds:</strong> ${minOdds} - ${maxOdds}<br>
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
       <button class="remove-bet">X</button>
       <button class="toggle-details">&#42780;</button>
     </div>
     <div class="bet-details">
-      <strong>Potential Winnings:</strong> ${potentialWinnings}<br>
-      <strong>Offers:</strong>
+      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
+      <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}" data-odds="${offer.odds}">${offer.totalizator}: ${offer.odds}</button></li>

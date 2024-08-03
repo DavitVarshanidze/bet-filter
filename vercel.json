@@ -1,16 +1,16 @@
 {
-    "rewrites": [
-      {
-        "source": "/totalizator1",
-        "destination": "http://localhost:3000/totalizator1"
-      },
-      {
-        "source": "/totalizator2",
-        "destination": "http://localhost:3000/totalizator2"
-      },
-      {
-        "source": "/totalizator3",
-        "destination": "http://localhost:3000/totalizator3"
-      }
-    ]
-  }
+  "rewrites": [
+    {
+      "source": "/totalizator1",
+      "destination": "http://localhost:3000/totalizator1"
+    },
+    {
+      "source": "/totalizator2",
+      "destination": "http://localhost:3000/totalizator2"
+    },
+    {
+      "source": "/totalizator3",
+      "destination": "http://localhost:3000/totalizator3"
+    }
+  ]
+}
