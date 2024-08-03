@@ -3,9 +3,9 @@ let selectedBets = [];
 // Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
-    `http://localhost:3000/totalizator1`,
-    `http://localhost:3000/totalizator2`,
-    `http://localhost:3000/totalizator3`,
+    `https://127.0.0.1:8080/totalizator1`,
+    `https://127.0.0.1:8080/totalizator2`,
+    `https://127.0.0.1:8080/totalizator3`,
   ];
 
   const totalizatorNames = ["Crystalbet", "Betlive", "Crocobet"];
@@ -17,7 +17,6 @@ async function fetchTotalizatorOdds(game) {
 
   try {
     const responses = await Promise.all(totalizatorAPIs.map(url => fetch(url)));
-
     const oddsData = await Promise.all(
       responses.map(async (response, index) => {
         if (response.ok) {
@@ -86,7 +85,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("გთხოვთ შეიყვანოთ ფსონი");
+    alert("Please enter a valid stake.");
     return;
   }
 
@@ -105,13 +104,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div class="bet-header">
       <strong>${game}</strong>
-      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
+      <strong>Odds:</strong> ${minOdds} - ${maxOdds}<br>
       <button class="remove-bet">X</button>
       <button class="toggle-details">&#42780;</button>
     </div>
     <div class="bet-details">
-      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
-      <strong>შეთავაზებები:</strong>
+      <strong>Potential Winnings:</strong> ${potentialWinnings}<br>
+      <strong>Offers:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}" data-odds="${offer.odds}">${offer.totalizator}: ${offer.odds}</button></li>
