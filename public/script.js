@@ -1,6 +1,6 @@
 let selectedBets = [];
 
-// Fetch odds data from totalizator APIs
+// Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
@@ -42,11 +42,9 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
-// Update the total potential winnings in the sidebar
+// Update total potential winnings in the sidebar
 function updateTotalPotentialWinnings() {
-  const stakeInput = document.getElementById("stake");
-  const stakeValue = parseFloat(stakeInput.value);
-
+  const stakeValue = parseFloat(document.getElementById("stake").value);
   if (isNaN(stakeValue) || stakeValue <= 0) {
     document.getElementById("total-potential-winnings").style.display = "none";
     return;
@@ -88,7 +86,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   const stakeValue = parseFloat(stakeInput.value);
 
   if (isNaN(stakeValue) || stakeValue <= 0) {
-    alert("Please enter a valid stake.");
+    alert("გთხოვთ შეიყვანოთ ფსონი");
     return;
   }
 
@@ -107,13 +105,13 @@ async function addToSidebar(game, minOdds, maxOdds) {
   betDiv.innerHTML = `
     <div class="bet-header">
       <strong>${game}</strong>
-      <strong>Odds:</strong> ${minOdds} - ${maxOdds}<br>
+      <strong>კოეფიციენტი:</strong> ${minOdds} - ${maxOdds}<br>
       <button class="remove-bet">X</button>
       <button class="toggle-details">&#42780;</button>
     </div>
-    <div class="bet-details" style="display: none;">
-      <strong>Potential Winnings:</strong> ${potentialWinnings}<br>
-      <strong>Offers:</strong>
+    <div class="bet-details">
+      <strong>შესაძლო მოგება:</strong> ${potentialWinnings}<br>
+      <strong>შეთავაზებები:</strong>
       <ul class="offers">
         ${totalizatorOdds.map(offer => `
           <li><button class="offer-button" data-url="${offer.url}" data-odds="${offer.odds}">${offer.totalizator}: ${offer.odds}</button></li>
@@ -151,6 +149,7 @@ async function addToSidebar(game, minOdds, maxOdds) {
   });
 
   sidebar.appendChild(betDiv);
+
   selectedBets.push({ game, totalizatorOdds });
   updateTotalPotentialWinnings();
 }

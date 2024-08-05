@@ -1,23 +1,21 @@
-const fs = require('fs');
-const https = require('https');
 const jsonServer = require('json-server');
-const express = require('express');
 const cors = require('cors');
-
 const server = jsonServer.create();
 const router = jsonServer.router('db.json');
 const middlewares = jsonServer.defaults();
-const app = express();
 
-app.use(cors()); 
-app.use(middlewares);
-app.use(router);
+// Use CORS middleware
+server.use(cors());
 
-const httpsOptions = {
-  key: fs.readFileSync('./localhost-key.pem'),
-  cert: fs.readFileSync('./localhost.pem'),
-};
+// Use default middlewares (logger, static, and no-cache)
+server.use(middlewares);
 
-https.createServer(httpsOptions, app).listen(3000, () => {
-  console.log('JSON Server is running on https://localhost:3000');
+// Add custom routes if needed
+
+// Use JSON Server router
+server.use(router);
+
+// Start server
+server.listen(3000, () => {
+  console.log('JSON Server is running on http://localhost:3000');
 });
