@@ -1,6 +1,5 @@
 let selectedBets = [];
 
-// Fetch odds from multiple totalizators
 async function fetchTotalizatorOdds(game) {
   const totalizatorAPIs = [
     `http://localhost:3000/totalizator1`,
@@ -42,7 +41,6 @@ async function fetchTotalizatorOdds(game) {
   }
 }
 
-// Update total potential winnings in the sidebar
 function updateTotalPotentialWinnings() {
   const stakeValue = parseFloat(document.getElementById("stake").value);
   if (isNaN(stakeValue) || stakeValue <= 0) {
@@ -79,7 +77,6 @@ function updateTotalPotentialWinnings() {
   document.getElementById("total-potential-winnings").style.display = "block";
 }
 
-// Add a bet to the sidebar
 async function addToSidebar(game, minOdds, maxOdds) {
   const sidebar = document.getElementById("selected-bets");
   const stakeInput = document.getElementById("stake");
@@ -120,7 +117,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
     </div>
   `;
 
-  // Determine the best offer
   const offers = betDiv.querySelectorAll(".offer-button");
   if (offers.length > 0) {
     const bestOffer = [...offers].reduce((best, current) => {
@@ -154,7 +150,6 @@ async function addToSidebar(game, minOdds, maxOdds) {
   updateTotalPotentialWinnings();
 }
 
-// Event listeners for buttons and stake input
 document.querySelectorAll(".odds-display button").forEach(button => {
   button.addEventListener("click", async () => {
     const game = button.dataset.game;
